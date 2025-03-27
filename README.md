@@ -15,5 +15,5 @@ Projenin belirli bir versiyonuna [buradan](https://github.com/rakarubtemha/FavPl
 
 Proje Ekibi : Ahmet Burak AR, Esranur Çınar, Hakan Çatal
 
-[Burak Durum Diyagramı](https://github.com/rakarubtemha/FavPlace/blob/main/%20Kullanıcı%20Başarı%20Senaryoları%20(UC1-UC7).pdf)
+[Burak Durum Diyagramı](https://github.com/rakarubtemha/FavPlace/blob/main/%20Kullanıcı%20Başarı%20Senaryoları%20(UC1-UC7).pdf) 
 
