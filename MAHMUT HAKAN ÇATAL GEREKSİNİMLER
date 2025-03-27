@@ -1,0 +1,56 @@
+15. Favorilerime Ekle (Hakan)
+Senaryo:
+Kullanıcı giriş yapar.
+Bir mekanın veya etkinliğin detay sayfasına girer.
+"Favorilere Ekle" butonuna tıklar.
+Sistem, mekan/etkinliği kullanıcının favorilerine ekler ve onay mesajı gösterir.
+
+16. Favorileri Listeleme (Hakan)
+Senaryo:
+Kullanıcı giriş yapar.
+Profil veya "Favorilerim" sekmesine tıklar.
+Sistem, kullanıcının daha önce favorilere eklediği mekanları ve etkinlikleri listeler.
+Kullanıcı favori mekan/etkinlikleri inceleyebilir veya detay sayfasına gidebilir.
+
+17. Mekan Bilgilerini Göster (Hakan)
+Senaryo:
+Kullanıcı giriş yapar veya ziyaretçi olarak devam eder.
+Bir mekanın adını aratarak veya listeden seçerek detay sayfasına girer.
+Sistem, mekanın adı, adresi, puanı, yorumları, menüsü, çalışma saatleri ve yoğunluk bilgilerini gösterir.
+Kullanıcı mekan hakkında daha fazla bilgi alabilir veya favorilere ekleyebilir.
+
+18. Menü Ekleme (Hakan)
+Senaryo:
+Mekan sahibi veya yetkili kişi giriş yapar.
+"Menü Yönetimi" sekmesine girer.
+"Yeni Menü Ekle" butonuna tıklar.
+Sistem, menü adı, açıklaması, fiyat bilgisi ve görsel yükleme alanlarını sunar.
+Kullanıcı bilgileri girer ve "Kaydet" butonuna tıklar.
+Sistem menüyü kaydeder ve mekan sayfasında görüntüler.
+
+19. Menü Silme (Hakan)
+Senaryo:
+Mekan sahibi veya yetkili kişi giriş yapar.
+"Menü Yönetimi" sekmesine girer.
+Silmek istediği menüyü seçer.
+"Sil" butonuna tıklar ve onay verir.
+Sistem menüyü kaldırır ve onay mesajı gösterir.
+
+20. Menü Güncelleme (Hakan)
+Senaryo:
+Mekan sahibi veya yetkili kişi giriş yapar.
+"Menü Yönetimi" sekmesine girer.
+Güncellemek istediği menüyü seçer.
+"Düzenle" butonuna tıklar.
+Menü adı, açıklaması, fiyatı veya görseli güncellenir.
+"Kaydet" butonuna basılır.
+Sistem güncellemeyi kaydeder ve yeni bilgileri mekan sayfasında gösterir.
+
+21. Favoriden Silme (Hakan)
+Senaryo:
+Kullanıcı giriş yapar.
+"Favorilerim" sekmesine girer.
+Silmek istediği mekan veya etkinliği seçer.
+"Favorilerden Çıkar" butonuna tıklar.
+Sistem, ilgili mekanı/etkinliği favorilerden kaldırır ve onay mesajı gösterir.
+
