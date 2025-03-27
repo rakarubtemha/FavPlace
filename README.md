@@ -17,5 +17,4 @@ Proje Ekibi : Ahmet Burak AR, Esranur Çınar, Hakan Çatal
 3. [Durum Diyagramı Görüntüle](https://github.com/rakarubtemha/FavPlace/blob/main/durum%20diyagram%C4%B1.jpeg)
 4. [Esranur Cinar Gereksinimler Dokümanı](https://github.com/rakarubtemha/FavPlace/blob/main/esranurcinar%20gereksinimlerr)
 5. [Esranur Cinar - Durum Senaryoları (7-15)](https://github.com/rakarubtemha/FavPlace/blob/main/DURUM.SENARYOLARI.pdf)
-
-[Ahmet Burak Ar - Durum Senaryoları ( Kullanıcı Başarı Senaryoları (UC1-UC7).pdf)
+6. [Ahmet Burak Ar - Durum Senaryoları](https://github.com/rakarubtemha/FavPlace/blob/patch-3/%20Kullan%C4%B1c%C4%B1%20Bas%CC%A7ar%C4%B1%20Senaryolar%C4%B1%20(UC1-UC7).pdf)
