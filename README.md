@@ -20,4 +20,4 @@ Proje Ekibi : Ahmet Burak AR, Esranur Çınar, Hakan Çatal
 6. [Ahmet Burak Ar - Durum Senaryoları](https://github.com/rakarubtemha/FavPlace/blob/patch-3/%20Kullan%C4%B1c%C4%B1%20Bas%CC%A7ar%C4%B1%20Senaryolar%C4%B1%20(UC1-UC7).pdf)
 7. [Ahmet Burak Ar - Gereksinimler](https://github.com/rakarubtemha/FavPlace/blob/patch-1/Ahmet%20Burak%20Ar%20Gereksinimler)
 8. [Mahmut Hakan ÇATAL Gereksinimler Dokümanı](https://github.com/rakarubtemha/FavPlace/blob/main/MAHMUT%20HAKAN%20%C3%87ATAL%20GEREKS%C4%B0N%C4%B0MLER)
-9. [Mahmut Hakan ÇATAL - Durum Senaryoları (15-21)]([https://github.com/rakarubtemha/FavPlace/blob/main/MAHMUT%20HAKAN%20%C3%87ATAL%20GEREKS%C4%B0N%C4%B0MLER](https://github.com/rakarubtemha/FavPlace/blob/main/Use_Case_Senaryolari_MAHMUT%20HAKAN%20%C3%87ATAL_%20UC15-UC21.pdf))
+9. [Mahmut Hakan ÇATAL - Durum Senaryoları (15-21)]((https://github.com/rakarubtemha/FavPlace/blob/main/Use_Case_Senaryolari_MAHMUT%20HAKAN%20%C3%87ATAL_%20UC15-UC21.pdf))
