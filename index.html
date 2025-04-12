@@ -6,9 +6,6 @@
     <title>FavPlace - Favori Mekanlarım</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* CSS kodları buraya gelecek */
-    </style>
 </head>
 <body>
     <header>
@@ -20,11 +17,13 @@
                     <li><a href="#" data-tab="places"><i class="fas fa-map-marker-alt"></i> Mekanlar</a></li>
                     <li><a href="#" data-tab="events"><i class="fas fa-calendar-alt"></i> Etkinlikler</a></li>
                     <li><a href="#" data-tab="profile"><i class="fas fa-user"></i> Profil</a></li>
+                    <li id="ownerDashboardLink" class="hidden"><a href="#" data-tab="owner-dashboard"><i class="fas fa-store"></i> Mekan Yönetimi</a></li>
                 </ul>
             </nav>
             <div class="auth-buttons">
                 <button id="login-btn"><i class="fas fa-sign-in-alt"></i> Giriş Yap</button>
                 <button id="register-btn"><i class="fas fa-user-plus"></i> Kayıt Ol</button>
+                <button id="owner-register-btn" class="btn owner"><i class="fas fa-store"></i> Mekan Sahibi Ol</button>
             </div>
         </div>
     </header>
@@ -142,7 +141,7 @@
                     <button id="sort-by-rating"><i class="fas fa-star"></i> Puana Göre</button>
                     <button id="sort-by-date"><i class="fas fa-calendar"></i> Tarihe Göre</button>
                 </div>
-                <button id="addNewEventBtn" class="btn primary"><i class="fas fa-plus"></i> Yeni Etkinlik Ekle</button>
+                <button id="addNewEventBtn" class="btn primary hidden"><i class="fas fa-plus"></i> Yeni Etkinlik Ekle</button>
             </div>
             
             <div class="events-grid" id="eventsContainer">
@@ -237,6 +236,7 @@
                     </div>
                     <h3 id="profileUsername">Misafir</h3>
                     <p id="profileEmail">Giriş yapılmamış</p>
+                    <p id="profileRole" class="role-tag"></p>
                     
                     <div class="profile-actions">
                         <button id="updateProfileBtn" class="btn secondary">Profil Güncelle</button>
@@ -258,6 +258,72 @@
                         <div class="comments-list" id="profileComments">
                             <!-- Yorumlar buraya eklenecek -->
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Owner Dashboard Tab -->
+        <div class="tab-content" id="owner-dashboard">
+            <div class="owner-header">
+                <h2><i class="fas fa-store"></i> Mekan Yönetimi</h2>
+            </div>
+            
+            <div class="owner-content">
+                <div class="owner-places">
+                    <h3><i class="fas fa-map-marker-alt"></i> Mekanlarım</h3>
+                    <div class="places-grid" id="ownerPlacesList">
+                        <!-- Mekanlar buraya eklenecek -->
+                    </div>
+                </div>
+                
+                <div class="owner-events">
+                    <div class="events-header">
+                        <h3><i class="fas fa-calendar-alt"></i> Etkinliklerim</h3>
+                        <button id="addNewEventOwnerBtn" class="btn primary"><i class="fas fa-plus"></i> Yeni Etkinlik Ekle</button>
+                    </div>
+                    <div class="events-grid" id="ownerEventsList">
+                        <!-- Etkinlikler buraya eklenecek -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Modal -->
+        <div class="modal" id="menuModal">
+            <div class="modal-content">
+                <span class="close-modal-btn">&times;</span>
+                <h2 id="menuModalTitle">Mekan Menüsü</h2>
+                <div class="menu-container">
+                    <div class="menu-categories">
+                        <h3>Menü Kategorileri</h3>
+                        <div class="categories-list" id="menuCategoriesList">
+                            <!-- Kategoriler buraya eklenecek -->
+                        </div>
+                        <form id="addCategoryForm">
+                            <input type="text" id="newCategoryName" placeholder="Yeni kategori adı" required>
+                            <button type="submit" class="btn primary">Ekle</button>
+                        </form>
+                    </div>
+                    
+                    <div class="menu-items">
+                        <h3 id="currentCategoryTitle">Menü Öğeleri</h3>
+                        <div class="items-list" id="menuItemsList">
+                            <!-- Menü öğeleri buraya eklenecek -->
+                        </div>
+                        <form id="addMenuItemForm">
+                            <input type="hidden" id="currentCategoryId">
+                            <div class="form-group">
+                                <input type="text" id="newItemName" placeholder="Öğe adı" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="newItemPrice" placeholder="Fiyat" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="newItemDescription" placeholder="Açıklama"></textarea>
+                            </div>
+                            <button type="submit" class="btn primary">Öğe Ekle</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -310,7 +376,160 @@
             </form>
         </div>
     </div>
+
+    <div class="modal" id="ownerRegisterModal">
+        <div class="modal-content">
+            <span class="close-modal-btn">&times;</span>
+            <h2>Mekan Sahibi Kayıt</h2>
+            <form id="ownerRegisterForm">
+                <div class="form-group">
+                    <label for="ownerRegisterName">Ad Soyad:</label>
+                    <input type="text" id="ownerRegisterName" required>
+                </div>
+                <div class="form-group">
+                    <label for="ownerRegisterEmail">E-posta:</label>
+                    <input type="email" id="ownerRegisterEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="ownerRegisterPassword">Şifre:</label>
+                    <input type="password" id="ownerRegisterPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="ownerRegisterConfirmPassword">Şifre Tekrar:</label>
+                    <input type="password" id="ownerRegisterConfirmPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="ownerBusinessName">İşletme Adı:</label>
+                    <input type="text" id="ownerBusinessName" required>
+                </div>
+                <div class="form-group">
+                    <label for="ownerBusinessType">İşletme Türü:</label>
+                    <select id="ownerBusinessType" required>
+                        <option value="restoran">Restoran</option>
+                        <option value="kafe">Kafe</option>
+                        <option value="bar">Bar</option>
+                        <option value="otel">Otel</option>
+                        <option value="diğer">Diğer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ownerBusinessAddress">İşletme Adresi:</label>
+                    <input type="text" id="ownerBusinessAddress" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+                <button type="button" id="showOwnerLoginBtn" class="btn btn-secondary">Giriş Yap</button>
+            </form>
+        </div>
+    </div>
     
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title">Giriş Yap</h2>
+            <form id="auth-form">
+                <input type="text" id="username" placeholder="Kullanıcı Adı" required>
+                <input type="password" id="password" placeholder="Şifre" required>
+                <select id="user-type" style="display:none;">
+                    <option value="normal">Normal Kullanıcı</option>
+                    <option value="owner">Mekan Sahibi</option>
+                </select>
+                <button type="submit" id="submit-btn">Giriş Yap</button>
+            </form>
+        </div>
+    </div>
+
+    <main>
+        <!-- Normal Kullanıcı Görünümü -->
+        <div id="user-view">
+            <h2>Mekanlar</h2>
+            <div id="venues-container" class="card-container"></div>
+        </div>
+
+        <!-- Mekan Sahibi Görünümü -->
+        <div id="owner-view" style="display:none;">
+            <div class="owner-actions">
+                <button id="add-venue">Mekan Ekle</button>
+                <button id="add-event">Etkinlik Oluştur</button>
+            </div>
+            
+            <h2>Mekanlarım</h2>
+            <div id="owner-venues" class="card-container"></div>
+            
+            <h2>Etkinliklerim</h2>
+            <div id="owner-events" class="card-container"></div>
+        </div>
+
+        <!-- Mekan Detay Görünümü -->
+        <div id="venue-detail" style="display:none;">
+            <button id="back-btn">← Geri Dön</button>
+            <h2 id="venue-name"></h2>
+            
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="info">Bilgiler</button>
+                <button class="tab-btn" data-tab="menu">Menüyü Göster</button>
+                <button class="tab-btn" data-tab="events">Etkinlikler</button>
+                <button class="tab-btn owner-tab" data-tab="edit-menu" style="display:none;">Menü Düzenle</button>
+            </div>
+            
+            <div id="info-tab" class="tab-content active">
+                <p id="venue-description"></p>
+                <p id="venue-address"></p>
+                <p id="venue-capacity"></p>
+            </div>
+            
+            <div id="menu-tab" class="tab-content">
+                <div id="menu-items"></div>
+            </div>
+            
+            <div id="events-tab" class="tab-content">
+                <div id="venue-events"></div>
+            </div>
+            
+            <div id="edit-menu-tab" class="tab-content">
+                <h3>Menü Düzenle</h3>
+                <form id="menu-form">
+                    <div id="menu-editor">
+                        <!-- Menü öğeleri buraya eklenecek -->
+                    </div>
+                    <button type="button" id="add-item">Öğe Ekle</button>
+                    <button type="submit">Menüyü Kaydet</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Mekan Ekleme Modalı -->
+    <div id="venue-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Yeni Mekan Ekle</h2>
+            <form id="new-venue-form">
+                <input type="text" id="venue-name-input" placeholder="Mekan Adı" required>
+                <textarea id="venue-desc-input" placeholder="Açıklama" required></textarea>
+                <input type="text" id="venue-address-input" placeholder="Adres" required>
+                <input type="number" id="venue-capacity-input" placeholder="Kapasite" required>
+                <button type="submit">Kaydet</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Etkinlik Ekleme Modalı -->
+    <div id="event-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Yeni Etkinlik Ekle</h2>
+            <form id="new-event-form">
+                <input type="text" id="event-name-input" placeholder="Etkinlik Adı" required>
+                <textarea id="event-desc-input" placeholder="Açıklama" required></textarea>
+                <select id="event-venue-select" required>
+                    <!-- Mekanlar buraya eklenecek -->
+                </select>
+                <input type="datetime-local" id="event-date-input" required>
+                <button type="submit">Kaydet</button>
+            </form>
+        </div>
+    </div>
+   
     <div class="modal" id="passwordModal">
         <div class="modal-content">
             <span class="close-modal-btn">&times;</span>
