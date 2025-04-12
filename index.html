@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FavPlace - Favori Mekanlarım</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* CSS kodları buraya gelecek */
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-heart"></i> FavPlace</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active" data-tab="dashboard"><i class="fas fa-home"></i> Anasayfa</a></li>
+                    <li><a href="#" data-tab="places"><i class="fas fa-map-marker-alt"></i> Mekanlar</a></li>
+                    <li><a href="#" data-tab="events"><i class="fas fa-calendar-alt"></i> Etkinlikler</a></li>
+                    <li><a href="#" data-tab="profile"><i class="fas fa-user"></i> Profil</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button id="login-btn"><i class="fas fa-sign-in-alt"></i> Giriş Yap</button>
+                <button id="register-btn"><i class="fas fa-user-plus"></i> Kayıt Ol</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container main-container">
+        <!-- Dashboard Tab -->
+        <div class="tab-content active" id="dashboard">
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>Toplam Mekan</h3>
+                    <p id="total-places">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Toplam Etkinlik</h3>
+                    <p id="total-events">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Favori Mekan</h3>
+                    <p id="favorite-place">Yok</p>
+                </div>
+            </div>
+            
+            <div class="welcome-message">
+                <h2>Hoş Geldiniz!</h2>
+                <p>Favori mekanlarınızı ve etkinliklerinizi yönetebileceğiniz kişisel platformunuza hoş geldiniz.</p>
+                <img src="https://cdn-icons-png.flaticon.com/512/3176/3176272.png" alt="Welcome" class="welcome-img">
+            </div>
+        </div>
+
+        <!-- Places Tab -->
+        <div class="tab-content" id="places">
+            <div class="places-header">
+                <h2><i class="fas fa-map-marker-alt"></i> Favori Mekanlarım</h2>
+                <div class="search-box">
+                    <input type="text" id="searchPlacesInput" placeholder="Mekan ara...">
+                    <button id="searchPlacesBtn"><i class="fas fa-search"></i></button>
+                </div>
+                <button id="addNewPlaceBtn" class="btn primary"><i class="fas fa-plus"></i> Yeni Mekan Ekle</button>
+            </div>
+            
+            <div class="places-container">
+                <div class="sidebar">
+                    <div class="favorites-list">
+                        <h3><i class="fas fa-list"></i> Mekan Listesi</h3>
+                        <ul id="favoritesList">
+                            <!-- Favoriler buraya eklenecek -->
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="content-area">
+                    <div id="placeDetails" class="place-details">
+                        <div class="welcome-message">
+                            <h3>Bir mekan seçin</h3>
+                            <p>Soldaki listeden bir mekan seçerek detaylarını görüntüleyebilirsiniz.</p>
+                        </div>
+                    </div>
+                    
+                    <div id="placeForm" class="place-form hidden">
+                        <h2 id="formTitle">Yeni Mekan Ekle</h2>
+                        <form id="placeFormElement">
+                            <input type="hidden" id="placeId">
+                            <div class="form-group">
+                                <label for="placeName">Mekan Adı:</label>
+                                <input type="text" id="placeName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="placeAddress">Adres:</label>
+                                <input type="text" id="placeAddress" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="placeType">Tür:</label>
+                                <select id="placeType">
+                                    <option value="restoran">Restoran</option>
+                                    <option value="kafe">Kafe</option>
+                                    <option value="bar">Bar</option>
+                                    <option value="park">Park</option>
+                                    <option value="müze">Müze</option>
+                                    <option value="diğer">Diğer</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="placeRating">Puan (1-5):</label>
+                                <input type="number" id="placeRating" min="1" max="5" value="3">
+                            </div>
+                            <div class="form-group">
+                                <label for="placeNotes">Notlar:</label>
+                                <textarea id="placeNotes" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="placeImage">Resim URL:</label>
+                                <input type="text" id="placeImage" placeholder="https://...">
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary" id="savePlaceBtn">Kaydet</button>
+                                <button type="button" class="btn btn-secondary" id="cancelFormBtn">İptal</button>
+                                <button type="button" class="btn btn-danger hidden" id="deletePlaceBtn">Mekanı Sil</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Events Tab -->
+        <div class="tab-content" id="events">
+            <div class="events-header">
+                <h2><i class="fas fa-calendar-alt"></i> Etkinlikler</h2>
+                <div class="search-box">
+                    <input type="text" id="searchEventsInput" placeholder="Etkinlik ara...">
+                    <button id="searchEventsBtn"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="sort-options">
+                    <button id="sort-by-rating"><i class="fas fa-star"></i> Puana Göre</button>
+                    <button id="sort-by-date"><i class="fas fa-calendar"></i> Tarihe Göre</button>
+                </div>
+                <button id="addNewEventBtn" class="btn primary"><i class="fas fa-plus"></i> Yeni Etkinlik Ekle</button>
+            </div>
+            
+            <div class="events-grid" id="eventsContainer">
+                <!-- Etkinlikler buraya eklenecek -->
+            </div>
+            
+            <div class="modal" id="eventModal">
+                <div class="modal-content">
+                    <span class="close-modal-btn">&times;</span>
+                    <h2 id="eventModalTitle">Etkinlik Detayları</h2>
+                    <div class="event-details-content">
+                        <img id="eventModalImage" src="" alt="Etkinlik Resmi">
+                        <div class="event-info">
+                            <p id="eventModalDescription"></p>
+                            <div class="event-meta">
+                                <p><i class="fas fa-map-marker-alt"></i> <span id="eventModalLocation"></span></p>
+                                <p><i class="fas fa-calendar-alt"></i> <span id="eventModalDate"></span></p>
+                                <div class="event-rating">
+                                    <div class="stars" id="eventRatingStars">
+                                        <i class="far fa-star" data-rating="1"></i>
+                                        <i class="far fa-star" data-rating="2"></i>
+                                        <i class="far fa-star" data-rating="3"></i>
+                                        <i class="far fa-star" data-rating="4"></i>
+                                        <i class="far fa-star" data-rating="5"></i>
+                                    </div>
+                                    <span id="eventAverageRating"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="event-comments">
+                        <h3>Yorumlar</h3>
+                        <form id="addCommentForm">
+                            <textarea id="commentText" placeholder="Yorumunuzu yazın..." required></textarea>
+                            <button type="submit" class="btn primary">Yorum Yap</button>
+                        </form>
+                        <div class="comments-list" id="eventCommentsList">
+                            <!-- Yorumlar buraya eklenecek -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal" id="eventFormModal">
+                <div class="modal-content">
+                    <span class="close-modal-btn">&times;</span>
+                    <h2 id="eventFormTitle">Yeni Etkinlik Ekle</h2>
+                    <form id="eventForm">
+                        <input type="hidden" id="eventId">
+                        <div class="form-group">
+                            <label for="eventName">Etkinlik Adı:</label>
+                            <input type="text" id="eventName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventDescription">Açıklama:</label>
+                            <textarea id="eventDescription" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventLocation">Konum:</label>
+                            <input type="text" id="eventLocation" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventDate">Tarih:</label>
+                            <input type="datetime-local" id="eventDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="eventImage">Resim URL:</label>
+                            <input type="text" id="eventImage" placeholder="https://...">
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Kaydet</button>
+                            <button type="button" class="btn btn-secondary" id="cancelEventFormBtn">İptal</button>
+                            <button type="button" class="btn btn-danger hidden" id="deleteEventBtn">Etkinliği Sil</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Tab -->
+        <div class="tab-content" id="profile">
+            <div class="profile-header">
+                <h2><i class="fas fa-user"></i> Profil Bilgileri</h2>
+            </div>
+            
+            <div class="profile-content">
+                <div class="profile-info">
+                    <div class="avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h3 id="profileUsername">Misafir</h3>
+                    <p id="profileEmail">Giriş yapılmamış</p>
+                    
+                    <div class="profile-actions">
+                        <button id="updateProfileBtn" class="btn secondary">Profil Güncelle</button>
+                        <button id="changePasswordBtn" class="btn secondary">Şifre Değiştir</button>
+                        <button id="logoutBtn" class="btn danger">Çıkış Yap</button>
+                    </div>
+                </div>
+                
+                <div class="profile-details">
+                    <div class="user-favorites">
+                        <h3><i class="fas fa-heart"></i> Favori Mekanlarım</h3>
+                        <div class="favorites-grid" id="profileFavorites">
+                            <!-- Favoriler buraya eklenecek -->
+                        </div>
+                    </div>
+                    
+                    <div class="user-comments">
+                        <h3><i class="fas fa-comments"></i> Yorumlarım</h3>
+                        <div class="comments-list" id="profileComments">
+                            <!-- Yorumlar buraya eklenecek -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modals -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-modal-btn">&times;</span>
+            <h2>Giriş Yap</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">E-posta:</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Şifre:</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Giriş Yap</button>
+                <button type="button" id="showRegisterBtn" class="btn btn-secondary">Kayıt Ol</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <span class="close-modal-btn">&times;</span>
+            <h2>Kayıt Ol</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerName">Ad Soyad:</label>
+                    <input type="text" id="registerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">E-posta:</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Şifre:</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Şifre Tekrar:</label>
+                    <input type="password" id="registerConfirmPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+                <button type="button" id="showLoginBtn" class="btn btn-secondary">Giriş Yap</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="modal" id="passwordModal">
+        <div class="modal-content">
+            <span class="close-modal-btn">&times;</span>
+            <h2>Şifre Değiştir</h2>
+            <form id="passwordForm">
+                <div class="form-group">
+                    <label for="currentPassword">Mevcut Şifre:</label>
+                    <input type="password" id="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">Yeni Şifre:</label>
+                    <input type="password" id="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmNewPassword">Yeni Şifre Tekrar:</label>
+                    <input type="password" id="confirmNewPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Şifreyi Değiştir</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
