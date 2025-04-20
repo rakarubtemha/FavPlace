@@ -22,3 +22,9 @@ Proje Ekibi : Ahmet Burak AR, Esranur Çınar, Hakan Çatal
 8. [Mahmut Hakan ÇATAL Gereksinimler Dokümanı](https://github.com/rakarubtemha/FavPlace/blob/main/MAHMUT%20HAKAN%20%C3%87ATAL%20GEREKS%C4%B0N%C4%B0MLER)
 9. [Mahmut Hakan ÇATAL - Durum Senaryoları (15-21)](https://github.com/rakarubtemha/FavPlace/blob/main/Use_Case_Senaryolari_MAHMUT%20HAKAN%20%C3%87ATAL_%20UC15-UC21.pdf)
 10. [Front End Klasörüne Git](https://github.com/rakarubtemha/FavPlace/tree/f1f8000734c17c1916fdda8bddde800cee932d00/Frontend)
+
+
+
+Proje Videosu
+
+https://github.com/user-attachments/assets/250e7a19-6e84-4db1-9e2b-d23ae5f51a5c
