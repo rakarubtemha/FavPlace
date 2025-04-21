@@ -25,6 +25,6 @@ Proje Ekibi : Ahmet Burak AR, Esranur Çınar, Hakan Çatal
 11. [Proje Linki](fav-place-v2b9.vercel.app)
 
 
-be Proje Videosu
+Ve Proje Videosu
 
 https://github.com/user-attachments/assets/250e7a19-6e84-4db1-9e2b-d23ae5f51a5c
