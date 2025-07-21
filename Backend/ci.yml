@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    services:
+      rabbitmq:
+        image: rabbitmq:3-management
+        ports: [5672:5672, 15672:15672]
+      redis:
+        image: redis
+        ports: [6379:6379]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm install
+      - run: npm run build
+      - run: npm test 
