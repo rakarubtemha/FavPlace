@@ -1,128 +1,202 @@
-declare namespace QuickLRU {
-	interface Options<KeyType, ValueType> {
-		/**
-		The maximum number of milliseconds an item should remain in the cache.
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-		@default Infinity
+import { FirebaseApp } from '@firebase/app-types';
+import {
+  CompleteFn,
+  EmulatorMockTokenOptions,
+  FirebaseError,
+  NextFn,
+  Unsubscribe
+} from '@firebase/util';
 
-		By default, `maxAge` will be `Infinity`, which means that items will never expire.
-		Lazy expiration upon the next write or read call.
-
-		Individual expiration of an item can be specified by the `set(key, value, maxAge)` method.
-		*/
-		readonly maxAge?: number;
-
-		/**
-		The maximum number of items before evicting the least recently used items.
-		*/
-		readonly maxSize: number;
-
-		/**
-		Called right before an item is evicted from the cache.
-
-		Useful for side effects or for items like object URLs that need explicit cleanup (`revokeObjectURL`).
-		*/
-		onEviction?: (key: KeyType, value: ValueType) => void;
-	}
+export interface FullMetadata extends UploadMetadata {
+  bucket: string;
+  fullPath: string;
+  generation: string;
+  metageneration: string;
+  name: string;
+  size: number;
+  timeCreated: string;
+  updated: string;
 }
 
-declare class QuickLRU<KeyType, ValueType>
-	implements Iterable<[KeyType, ValueType]> {
-	/**
-	The stored item count.
-	*/
-	readonly size: number;
-
-	/**
-	Simple ["Least Recently Used" (LRU) cache](https://en.m.wikipedia.org/wiki/Cache_replacement_policies#Least_Recently_Used_.28LRU.29).
-
-	The instance is [`iterable`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Iteration_protocols) so you can use it directly in a [`for…of`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Statements/for...of) loop.
-
-	@example
-	```
-	import QuickLRU = require('quick-lru');
-
-	const lru = new QuickLRU({maxSize: 1000});
-
-	lru.set('🦄', '🌈');
-
-	lru.has('🦄');
-	//=> true
-
-	lru.get('🦄');
-	//=> '🌈'
-	```
-	*/
-	constructor(options: QuickLRU.Options<KeyType, ValueType>);
-
-	[Symbol.iterator](): IterableIterator<[KeyType, ValueType]>;
-
-	/**
-	Set an item. Returns the instance.
-
-	Individual expiration of an item can be specified with the `maxAge` option. If not specified, the global `maxAge` value will be used in case it is specified in the constructor, otherwise the item will never expire.
-
-	@returns The list instance.
-	*/
-	set(key: KeyType, value: ValueType, options?: {maxAge?: number}): this;
-
-	/**
-	Get an item.
-
-	@returns The stored item or `undefined`.
-	*/
-	get(key: KeyType): ValueType | undefined;
-
-	/**
-	Check if an item exists.
-	*/
-	has(key: KeyType): boolean;
-
-	/**
-	Get an item without marking it as recently used.
-
-	@returns The stored item or `undefined`.
-	*/
-	peek(key: KeyType): ValueType | undefined;
-
-	/**
-	Delete an item.
-
-	@returns `true` if the item is removed or `false` if the item doesn't exist.
-	*/
-	delete(key: KeyType): boolean;
-
-	/**
-	Delete all items.
-	*/
-	clear(): void;
-
-	/**
-	Update the `maxSize` in-place, discarding items as necessary. Insertion order is mostly preserved, though this is not a strong guarantee.
-
-	Useful for on-the-fly tuning of cache sizes in live systems.
-	*/
-	resize(maxSize: number): void;
-
-	/**
-	Iterable for all the keys.
-	*/
-	keys(): IterableIterator<KeyType>;
-
-	/**
-	Iterable for all the values.
-	*/
-	values(): IterableIterator<ValueType>;
-
-	/**
-	Iterable for all entries, starting with the oldest (ascending in recency).
-	*/
-	entriesAscending(): IterableIterator<[KeyType, ValueType]>;
-
-	/**
-	Iterable for all entries, starting with the newest (descending in recency).
-	*/
-	entriesDescending(): IterableIterator<[KeyType, ValueType]>;
+export interface Reference {
+  bucket: string;
+  child(path: string): Reference;
+  delete(): Promise<void>;
+  fullPath: string;
+  getDownloadURL(): Promise<string>;
+  getMetadata(): Promise<FullMetadata>;
+  name: string;
+  parent: Reference | null;
+  put(
+    data: Blob | Uint8Array | ArrayBuffer,
+    metadata?: UploadMetadata
+  ): UploadTask;
+  putString(
+    data: string,
+    format?: StringFormat,
+    metadata?: UploadMetadata
+  ): UploadTask;
+  root: Reference;
+  storage: FirebaseStorage;
+  toString(): string;
+  updateMetadata(metadata: SettableMetadata): Promise<FullMetadata>;
+  listAll(): Promise<ListResult>;
+  list(options?: ListOptions): Promise<ListResult>;
 }
 
-export = QuickLRU;
+export interface ListResult {
+  prefixes: Reference[];
+  items: Reference[];
+  nextPageToken: string | null;
+}
+
+export interface ListOptions {
+  maxResults?: number | null;
+  pageToken?: string | null;
+}
+
+export interface SettableMetadata {
+  cacheControl?: string | null;
+  contentDisposition?: string | null;
+  contentEncoding?: string | null;
+  contentLanguage?: string | null;
+  contentType?: string | null;
+  customMetadata?: {
+    [/* warning: coerced from ? */ key: string]: string;
+  } | null;
+}
+
+export type StringFormat = string;
+export type TaskEvent = string;
+export type TaskState = string;
+
+export interface UploadMetadata extends SettableMetadata {
+  md5Hash?: string | null;
+}
+
+export interface StorageObserver<T> {
+  next?: NextFn<T> | null;
+  error?: (error: FirebaseStorageError) => void | null;
+  complete?: CompleteFn | null;
+}
+
+export enum StorageErrorCode {
+  UNKNOWN = 'unknown',
+  OBJECT_NOT_FOUND = 'object-not-found',
+  BUCKET_NOT_FOUND = 'bucket-not-found',
+  PROJECT_NOT_FOUND = 'project-not-found',
+  QUOTA_EXCEEDED = 'quota-exceeded',
+  UNAUTHENTICATED = 'unauthenticated',
+  UNAUTHORIZED = 'unauthorized',
+  UNAUTHORIZED_APP = 'unauthorized-app',
+  RETRY_LIMIT_EXCEEDED = 'retry-limit-exceeded',
+  INVALID_CHECKSUM = 'invalid-checksum',
+  CANCELED = 'canceled',
+  INVALID_EVENT_NAME = 'invalid-event-name',
+  INVALID_URL = 'invalid-url',
+  INVALID_DEFAULT_BUCKET = 'invalid-default-bucket',
+  NO_DEFAULT_BUCKET = 'no-default-bucket',
+  CANNOT_SLICE_BLOB = 'cannot-slice-blob',
+  SERVER_FILE_WRONG_SIZE = 'server-file-wrong-size',
+  NO_DOWNLOAD_URL = 'no-download-url',
+  INVALID_ARGUMENT = 'invalid-argument',
+  INVALID_ARGUMENT_COUNT = 'invalid-argument-count',
+  APP_DELETED = 'app-deleted',
+  INVALID_ROOT_OPERATION = 'invalid-root-operation',
+  INVALID_FORMAT = 'invalid-format',
+  INTERNAL_ERROR = 'internal-error',
+  UNSUPPORTED_ENVIRONMENT = 'unsupported-environment'
+}
+
+export interface FirebaseStorageError extends FirebaseError {
+  /**
+   * Stores custom error data unique to the `StorageError`.
+   */
+  customData: {
+    serverResponse: string | null;
+  };
+
+  get status(): number;
+  set status(status: number);
+  /**
+   * Compares a `StorageErrorCode` against this error's code, filtering out the prefix.
+   */
+  _codeEquals(code: StorageErrorCode): boolean;
+  /**
+   * Optional response message that was added by the server.
+   */
+  get serverResponse(): null | string;
+  set serverResponse(serverResponse: string | null);
+}
+export interface UploadTask {
+  cancel(): boolean;
+  catch(onRejected: (error: FirebaseStorageError) => any): Promise<any>;
+  on(
+    event: TaskEvent,
+    nextOrObserver?:
+      | StorageObserver<UploadTaskSnapshot>
+      | null
+      | ((snapshot: UploadTaskSnapshot) => any),
+    error?: ((a: FirebaseStorageError) => any) | null,
+    complete?: Unsubscribe | null
+  ): Function;
+  pause(): boolean;
+  resume(): boolean;
+  snapshot: UploadTaskSnapshot;
+  then(
+    onFulfilled?: ((snapshot: UploadTaskSnapshot) => any) | null,
+    onRejected?: ((error: FirebaseStorageError) => any) | null
+  ): Promise<any>;
+}
+
+export interface UploadTaskSnapshot {
+  bytesTransferred: number;
+  metadata: FullMetadata;
+  ref: Reference;
+  state: TaskState;
+  task: UploadTask;
+  totalBytes: number;
+}
+
+export class FirebaseStorage {
+  private constructor();
+
+  app: FirebaseApp;
+  maxOperationRetryTime: number;
+  maxUploadRetryTime: number;
+  ref(path?: string): Reference;
+  refFromURL(url: string): Reference;
+  setMaxOperationRetryTime(time: number): void;
+  setMaxUploadRetryTime(time: number): void;
+
+  useEmulator(
+    host: string,
+    port: number,
+    options?: {
+      mockUserToken?: EmulatorMockTokenOptions | string;
+    }
+  ): void;
+}
+
+declare module '@firebase/component' {
+  interface NameServiceMapping {
+    'storage-compat': FirebaseStorage;
+  }
+}
