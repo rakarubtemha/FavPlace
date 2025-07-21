@@ -26,4 +26,5 @@ Proje Ekibi : Ahmet Burak AR, Esranur Çınar, Hakan Çatal
 12. [Backend](https://github.com/rakarubtemha/FavPlace/tree/main/Backend)
 
 Ve Proje Videosu
+
 https://github.com/user-attachments/assets/f62391f2-d07a-418d-9411-24ab72cf7911
