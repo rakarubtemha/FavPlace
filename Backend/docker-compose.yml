@@ -1,0 +1,20 @@
+services:
+  app:
+    build: .
+    ports: 
+      - "3000:3000"
+    environment:
+      - RABBITMQ_URL=amqp://rabbitmq
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - rabbitmq
+      - redis
+  rabbitmq:
+    image: "rabbitmq:3-management-alpine"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
