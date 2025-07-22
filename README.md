@@ -27,4 +27,4 @@ Proje Ekibi : Ahmet Burak AR, Esranur Çınar, Hakan Çatal
 
 Ve Proje Videosu
 
-https://youtu.be/7LtCuJJEvf8?si=-ILs6jcY197OLWcQ
+https://youtu.be/I_J2OXE-eO8?si=XIYM1lV4-nDf7C_Z&utm_source=MTQxZ
