@@ -1,3 +1,4 @@
+
 name: Docker Image CI
 
 on:
@@ -12,9 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      # Çalışma dizinini "FavPlace/Backend" klasörüne ayarlıyoruz
-      # Bu satır, üstündeki '- name:' ile aynı hizada değil, 2 boşluk daha içeride olmalı.
-      working-directory: FavPlace/Backend
-      # 'run' komutu da 'working-directory' ile aynı hizada olmalı.
-      # Çalışma dizini ayarlandığı için, Dockerfile ve bağlam yolları kısaltıldı.
+      # working-directory'yi sadece Backend olarak değiştirin
+      working-directory: Backend # DİKKAT: Sadece "Backend" olarak güncelledik
       run: docker build . --file Dockerfile -t my-image-name:${{ github.sha }}
