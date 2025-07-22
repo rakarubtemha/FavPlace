@@ -27,4 +27,4 @@ Proje Ekibi : Ahmet Burak AR, Esranur Çınar, Hakan Çatal
 
 Ve Proje Videosu
 
-https://github.com/rakarubtemha/FavPlace/issues/1
+https://youtu.be/dFoA8Jubbu8?si=N6pmh-RMMOfufXTV&utm_source=MTQxZ
